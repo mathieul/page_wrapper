@@ -7,17 +7,19 @@
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>Field1</th>
-          <th>Field2</th>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Year</th>
         </tr>
       </thead>
 
       <tbody>
         {{#if controller.content.isLoaded}}
-          {{#each controller.currentPage.<%= class_name.camelize.pluralize %>}}
+          {{#each controller.currentPage.<%= class_name.underscore.pluralize %>}}
             <tr>
-              <td>{{field1}}</td>
-              <td>{{field2}}</td>
+              <td>{{id}}</td>
+              <td>{{title}}</td>
+              <td>{{year}}</td>
             </tr>
           {{/each}}
         {{/if}}
