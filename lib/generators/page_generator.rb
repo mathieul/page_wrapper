@@ -13,6 +13,24 @@ module PageWrapper
 
       controller_path = File.join('app/controllers', class_path, "#{file_name}_pages_controller.rb")
       template 'model_controller.rb', controller_path
+
+      route "resources :#{class_name.underscore}_pages, only: [:index]"
+
+      controller_path = File.join('app/assets/javascripts/controllers', class_path, "#{file_name}_page_controller.js.coffee")
+      template 'page_controller.js.coffee', controller_path
+
+      model_path = File.join('app/assets/javascripts/models', class_path, "#{file_name}_page.js.coffee")
+      template 'page_model.js.coffee', model_path
+
+      template_path = File.join('app/assets/javascripts/templates', class_path, "#{file_name}_page.handlebars")
+      template 'page_template.handlebars', template_path
+
+      view_path = File.join('app/assets/javascripts/views', class_path, "#{file_name}_page.js.coffee")
+      template 'page_view.js.coffee', view_path
+    end
+
+    def show_readme
+      readme "README" if behavior == :invoke
     end
   end
 end

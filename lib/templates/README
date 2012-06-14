@@ -1,0 +1,18 @@
+Thand you for using page_wrapper!
+
+Please note that you should update your Ember application router with
+something like below. This basic example uses "movie" as the paged
+model:
+
+# app/assets/javascripts/routes/app_router.js.coffee
+App.Router = Ember.Router.extend
+  location: Ember.Location.create(implementation: 'hash')
+
+  root: Ember.State.extend
+    index: Ember.State.extend
+      route: '/'
+      connectOutlets: (router) ->
+        controller = router.get('applicationController')
+        controller.connectOutlet(App.MoviePageView, App.MoviePageController::firstPage())
+        moviePageController = router.get('moviePageController')
+        moviePageController.set('target', moviePageController)

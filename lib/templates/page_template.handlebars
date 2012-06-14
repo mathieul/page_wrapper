@@ -1,0 +1,28 @@
+<section>
+  <div class="page-header">
+    <h1><%= class_name.humanize.pluralize %></h1>
+  </div>
+
+  <div id="<%= class_name.underscore %>-list">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Field1</th>
+          <th>Field2</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#if controller.content.isLoaded}}
+          {{#each controller.currentPage.<%= class_name.camelize.pluralize %>}}
+            <tr>
+              <td>{{field1}}</td>
+              <td>{{field2}}</td>
+            </tr>
+          {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+  {{view PageWrapper.PaginationView pageBinding="controller.currentPage"}}
+</section>
