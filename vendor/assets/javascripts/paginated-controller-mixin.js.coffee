@@ -12,19 +12,16 @@ PageWrapper.PaginatedControllerMixin = Ember.Mixin.create
   # Event handlers
   #
   changePage: (event) ->
-    event.preventDefault()
     page = $(event.target).data('page')
     @update(id: page) unless page is 'disabled'
 
   filter: (event) ->
-    event.preventDefault()
     query = $(event.target).prev().val()
     query = $.trim(query)
     id = 1
     @update(id: id, query: query)
 
   changeSort: (event) ->
-    event.preventDefault()
     sortType = $(event.target).data('sort')
     page = @get('content').objectAt(0)
     [sort, dir] = if page.get('sort') is sortType
