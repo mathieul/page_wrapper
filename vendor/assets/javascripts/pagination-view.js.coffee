@@ -13,7 +13,7 @@ PageWrapper.PaginationView = Ember.View.extend
                   <a href="javascript:void(0)">{{value}}</a>
                 {{else}}
                   <a href="#" {{bindAttr data-page="page"}}
-                     {{action changePage}}>{{value}}</a>
+                     {{action changePage target="view.controller"}}>{{value}}</a>
                 {{/if}}
               </li>
             {{/each}}
