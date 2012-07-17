@@ -26,7 +26,7 @@ module PageWrapper
     end
 
     def initialize(params)
-      page = params[:id].to_i
+      page = params.fetch(:page, params[:id] || 1).to_i
       options = get_options_from(params)
       records = fetch_records(page, options)
       @attributes = options.merge(
