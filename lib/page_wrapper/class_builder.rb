@@ -7,9 +7,6 @@ module PageWrapper
     end
 
     def make_wrapper_module
-      # Module.new.tap do |mod|
-      #   mod.send(:define_method, :before_action) { @block }
-      # end
       module_instance = Module.new
       module_instance.send(:define_method, :before_action) { @block }
       module_instance
@@ -31,6 +28,13 @@ module PageWrapper
     end
 
     def make_page_serializer
+      names = @name.pluralize.to_sym
+      klass = Class.new(ActiveModel::Serializer) do
+        embed :ids, include: true
+        attributes :id, :pages, :first, :last, :total, :per_page, :query, :sort, :dir
+        has_many names
+      end
+      Object.const_set("#{@name}_page_serializer".classify.to_sym, klass)
     end
   end
 end
