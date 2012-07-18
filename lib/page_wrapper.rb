@@ -5,10 +5,12 @@ require 'page_wrapper/model'
 require 'page_wrapper/routes'
 require 'page_wrapper/class_builder'
 
-def PageWrapAs(resource_name, &block)
-  builder = PageWrapper::ClassBuilder.new(resource_name, &block)
-  the_module = builder.make_wrapper_module
-  builder.make_page_model(the_module)
-  builder.make_page_serializer
-  the_module
+module PageWrapper
+  def wrap_in_page(options = {})
+    resource_name = to_s.underscore
+    builder = PageWrapper::ClassBuilder.new(resource_name, options)
+    builder.make_page_model
+    builder.make_page_serializer
+    self
+  end
 end

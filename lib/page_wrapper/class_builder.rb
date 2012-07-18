@@ -2,17 +2,12 @@ require 'active_model_serializers'
 
 module PageWrapper
   class ClassBuilder
-    def initialize(name, &block)
-      @name, @block = name.to_s, block
+    def initialize(name, options)
+      @name = name
+      @before_action = options[:before_action]
     end
 
-    def make_wrapper_module
-      module_instance = Module.new
-      module_instance.send(:define_method, :before_action) { @block }
-      module_instance
-    end
-
-    def make_page_model(module_instance)
+    def make_page_model
       name, names = @name, @name.pluralize
       klass = Class.new(PageWrapper::Model)
       klass.send(:define_method, names) do
@@ -23,7 +18,8 @@ module PageWrapper
         items = model_class.paginated_query(page, options)
         instance_variable_set(:"@#{names.pluralize}", items)
       end
-      klass.extend(module_instance)
+      hook = @before_action
+      klass.send(:define_method, :before_action) { hook }
       Object.const_set("#{name}_page".classify.to_sym, klass)
     end
 
